@@ -13,6 +13,5 @@ The design purpose:
 - According to you requirement, 256 bits register can be changed to bigger. You can also transfer the data to firmware byte by byte with a FIFO.  
 - The example is based on FELIX. When without FELIX platform, VIO in chipscope can be used to exchange data between the software and firmware.  
  
-Kai Chen
+Kai Chen <kchen@bnl.gov>
 
-kchen AT bnl.gov
