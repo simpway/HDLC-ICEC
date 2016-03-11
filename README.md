@@ -1,5 +1,5 @@
 # HDLC-ICEC
-Under GPL v3.0 license.
+Under GPL v3.0 license. If you use this code, your must mak your source free.
 
 The python library for the IC control to GBTx, and EC control to GBT-SCA device.
 The design purpose:  
