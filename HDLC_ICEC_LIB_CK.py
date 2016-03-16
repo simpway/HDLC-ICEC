@@ -25,9 +25,6 @@
 # 2015 Nov.
 
 
-import sys
-import os
-
 def crc16_ccitt(sel, data):
     #print data
     if sel==0:
