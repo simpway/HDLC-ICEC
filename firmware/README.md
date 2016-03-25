@@ -1,4 +1,5 @@
 - Note: 
   + The Endian for the 2 IC bits and EC bits are different.
-  + EC are swapped in the wrapper.vhd. But EC Rx may be not swapped, due to the phase uncertainty, between GBT-SCA and GBTX.
-  + So muxsel is used.
+  + 2 bits of EC Tx are swapped in the wrapper.vhd. 
+  + 2 bits of EC Rx may be not swapped, due to some reason from GBTX (or maybe GBT-SCA).
+  	 * So muxsel is used to support the Endian change for these 2 EC Rx bits.
