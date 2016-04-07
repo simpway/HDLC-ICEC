@@ -1,5 +1,6 @@
+[![DOI](https://zenodo.org/badge/21279/simpway/HDLC-ICEC.svg)](https://zenodo.org/badge/latestdoi/21279/simpway/HDLC-ICEC)
 # HDLC-ICEC
-Under GPL v3.0 license. If you use this code, you must make your source free and open.
+Under GPL v3.0 license. 
 
 This package is the python library for the IC control to GBTx, and EC control to GBT-SCA device.  
 The kernel file is the HDLC\_ICEC\_LIB\_CK.py. This python library will do: HDLC bit stuffing/bit destuffing, parity generator/checking for IC, CRC generator/checing for EC. Files in firmware and software directory are examples with FELIX as back-end platform.
