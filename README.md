@@ -10,7 +10,7 @@ The design purpose:
   1. To generate a 256 bit HDLC format packet for the firmware.  
   2. Firmware simply shift the 256 bits to the 2 IC/EC bits. Other time these two bits are "11".  
 - For Front-End to Back-End path:  
-  1. Firmware simply shift the 2 IC/EC bits to the 256 bits register, when 0x7E is found, latch the register.   
+  1. Firmware simply shift the 2 IC/EC bits to the 256 bits register, when 0x7E is found (at 255-248, or 254-247, since when the GBTx convert 80M x1 bit to 40M x2 bit, there are two possible phases), latch the register.   
   2. To decode the received 256 bit HDLC format packet from firmware, get the information.    
 - According to you requirement, 256 bits register can be changed to bigger. You can also transfer the data to firmware byte by byte with a FIFO.  
 - The example is based on FELIX. When without FELIX platform, VIO in chipscope can be used to exchange data between the software and firmware.  
