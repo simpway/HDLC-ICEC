@@ -30,10 +30,7 @@
 -- Project Name:
 -- Target Devices:
 -- Tool versions:
--- Description:   The MODULE to send data to IC/EC bit, and receive data from
---                IC/EC bit. The data encoding and decoding to/from HDLC shold
---                be done in software. This module only send and receive data
---                to a multi-bytes register. users can change its width.
+-- Description: 
 --
 -- Dependencies:
 --
