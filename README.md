@@ -18,3 +18,6 @@ The design purpose:
  
 Kai Chen <kchen@bnl.gov>
 
+```diff
+- ***For EC to GBT-SCA, when using w/o GBTX, the bit order of the 2 TX bits and 2 RX bits may need to be set seperately.***
+```
