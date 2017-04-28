@@ -269,7 +269,7 @@ def IC_PACKING(I2CADDR, ADDR, GBT_LEN, RW, DATA):
     DATAALL[4]=0x00
     DATAALL[5]=ADDRL
     DATAALL[6]=ADDRH
-    for i in range(16):
+    for i in range(GBT_LEN):
         DATAALL[7+i]=DATA[i]
 
     PARITY=parity_gen(DATAALL[2:2+cal_len])
