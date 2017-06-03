@@ -1,29 +1,14 @@
--- Copyright (c) 2015, Kai Chen <kchen@bnl.gov>
--- All rights reserved.
--- Redistribution and use in source and binary forms, with or without
--- modification, are permitted provided that the following conditions are met:
---
---     * Redistributions of source code must retain the above copyright
---       notice, this list of conditions and the following disclaimer.
---     * Redistributions in binary form must reproduce the above copyright
---       notice, this list of conditions and the following disclaimer in the
---       documentation and/or other materials provided with the distribution.
---
--- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
--- ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
--- WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
--- DISCLAIMED. IN NO EVENT SHALL A COPYRIGHT HOLDER BE LIABLE FOR ANY
--- DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
--- (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
--- LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
--- ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
--- (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
--- SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
---
- 
-----------------------------------------------------------------------------------
--- Company:
--- Engineer: Kai Chen @ BNL
+--!-----------------------------------------------------------------------------
+--!                                                                           --
+--!           BNL - Brookhaven National Lboratory                             --
+--!                       Physics Department                                  --
+--!                         Omega Group                                       --
+--!-----------------------------------------------------------------------------
+--|
+--! author:      Kai Chen    (kchen@bnl.gov)
+--!
+--!
+--!-----------------------------------------------------------------------------
 --
 -- Create Date:    21:33:01 2015/11/18
 -- Design Name:
@@ -62,7 +47,7 @@ entity HDLC_TXRX is
     rx_long_data_reg_o  : out std_logic_vector(REG_WIDTH-1 downto 0);
     tx_long_data_reg_i  : in std_logic_vector(REG_WIDTH-1 downto 0);
 
-    tx_trig_i             : in std_logic;
+    tx_trig_i           : in std_logic;
     rx_trig_o           : out std_logic;
     
     txclk_40m           : in std_logic;
@@ -77,9 +62,14 @@ end HDLC_TXRX;
 architecture behv of HDLC_TXRX is
 
 
-  signal tx_long_data_reg, tx_long_data, rx_long_data_reg, rx_long_data : std_logic_vector(REG_WIDTH-1 downto 0);
-  signal rx_trig, rx_trig_r, rx_trig_2r : std_logic := '0';
-  signal RX_IDLE : std_logic := '1';
+  signal tx_long_data_reg       : std_logic_vector(REG_WIDTH-1 downto 0);
+  signal tx_long_data           : std_logic_vector(REG_WIDTH-1 downto 0);
+  signal rx_long_data_reg       : std_logic_vector(REG_WIDTH-1 downto 0);
+  signal rx_long_data           : std_logic_vector(REG_WIDTH-1 downto 0);
+  signal rx_trig                : std_logic := '0';
+  signal rx_trig_r              : std_logic := '0';
+  signal rx_trig_2r             : std_logic := '0';
+  signal RX_IDLE                : std_logic := '1';
   
 begin
   
@@ -87,51 +77,51 @@ begin
   rx_long_data_reg_o    <= rx_long_data_reg;
   tx_long_data_reg      <= tx_long_data_reg_i;
     
-process(txclk_40m)
-begin
-  if txclk_40m'event and txclk_40m='1' then
+  process(txclk_40m)
+  begin
+    if txclk_40m'event and txclk_40m='1' then
 
-    if tx_trig_i = '1' then
-      tx_long_data      <= tx_long_data_reg; 
-    else
-      tx_long_data      <= "11" & tx_long_data(255 downto 2); 
-    end if; 
+      if tx_trig_i = '1' then
+        tx_long_data      <= tx_long_data_reg; 
+      else
+        tx_long_data      <= "11" & tx_long_data(255 downto 2); 
+      end if; 
       
-    IC_TX_2b    <= tx_long_data(1 downto 0);
-  end if;
-end process;
-
-process(rxclk_40m)
-begin
-  if rxclk_40m'event and rxclk_40m = '1' then
-    rx_long_data        <= IC_RX_2b & rx_long_data(255 downto 2);
-    rx_trig_r   <= rx_trig;
-    rx_trig_2r  <= rx_trig_r;
-    rx_trig_o   <= rx_trig_2r;
-    if rx_long_data(7 downto 0) = "01111110" and RX_IDLE = '1' then
-      rx_long_data_reg  <= rx_long_data;
-      rx_trig   <= '1';
-    elsif rx_long_data(8 downto 1) = "01111110" and RX_IDLE = '1' then
-      rx_long_data_reg  <= '1' & rx_long_data(255 downto 1);
-      rx_trig   <= '1';  
-    else
-      rx_trig   <= '0';
+      IC_TX_2b    <= tx_long_data(1 downto 0);
     end if;
+  end process;
+
+  process(rxclk_40m)
+  begin
+    if rxclk_40m'event and rxclk_40m = '1' then
+      rx_long_data        <= IC_RX_2b & rx_long_data(255 downto 2);
+      rx_trig_r   <= rx_trig;
+      rx_trig_2r  <= rx_trig_r;
+      rx_trig_o   <= rx_trig_2r;
+      if rx_long_data(7 downto 0) = "01111110" and RX_IDLE = '1' then
+        rx_long_data_reg  <= rx_long_data;
+        rx_trig   <= '1';
+      elsif rx_long_data(8 downto 1) = "01111110" and RX_IDLE = '1' then
+        rx_long_data_reg  <= '1' & rx_long_data(255 downto 1);
+        rx_trig   <= '1';  
+      else
+        rx_trig   <= '0';
+      end if;
  --   if rx_trig_2r = '1' then
  --     rx_long_data_reg  <= rx_long_data;
  --   else
  --     rx_long_data_reg  <= rx_long_data_reg;
  --   end if;
 
-    if  rx_long_data(7 downto 0) = "11111111" or rx_long_data(7 downto 0) = "11111110" or rx_long_data(7 downto 0) = "01111111"  then
-      RX_IDLE   <= '1';
-    elsif rx_trig='1' then
-       RX_IDLE   <= '0';
-    else
-      RX_IDLE   <= RX_IDLE;
-    end if;
+      if  rx_long_data(7 downto 0) = "11111111" or rx_long_data(7 downto 0) = "11111110" or rx_long_data(7 downto 0) = "01111111"  then
+        RX_IDLE   <= '1';
+      elsif rx_trig='1' then
+        RX_IDLE   <= '0';
+      else
+        RX_IDLE   <= RX_IDLE;
+      end if;
       
-  end if;
-end process;
+    end if;
+  end process;
 
 end behv;
