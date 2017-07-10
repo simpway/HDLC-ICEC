@@ -16,6 +16,7 @@ The design purpose:
 - The example is based on FELIX. When without FELIX platform, VIO in chipscope can be used to exchange data between the software and firmware.  
 - This package has been fully verified on VLDB and LTDB testing, for both of IC and EC configuration.
 - Tr.ID must +1 for each operation. If the returned Tr.ID doesn't match, the operation should be redone.
+- Tr. ID can't be 0x00 and 0xFF.
 - CTRL number must +2 for each operation.
  
 Kai Chen <kchen@bnl.gov>
