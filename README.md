@@ -1,5 +1,3 @@
-[![DOI](https://zenodo.org/badge/21279/simpway/HDLC-ICEC.svg)](https://zenodo.org/badge/latestdoi/21279/simpway/HDLC-ICEC)
-# HDLC-ICEC
 Under GPL v3.0 license. 
 
 This package is the python library for the IC control to GBTx, and EC control to GBT-SCA device.  
@@ -19,8 +17,10 @@ The design purpose:
 - Tr. ID can't be 0x00 and 0xFF.
 - CTRL number must +2 for each operation.
  
-Kai Chen <kchen@bnl.gov>
 
 ```diff
 - ***For EC to GBT-SCA, when using w/o GBTX, the bit order of the 2 TX bits and 2 RX bits may need to be set seperately.***
+- Also works for LpGBT, endian of IC is different with GBT.
 ```
+
+For reference: https://doi.org/10.1109/TNS.2019.2924795
