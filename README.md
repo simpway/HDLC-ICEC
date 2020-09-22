@@ -20,7 +20,7 @@ The design purpose:
 
 ```diff
 - ***For EC to GBT-SCA, when using w/o GBTX, the bit order of the 2 TX bits and 2 RX bits may need to be set seperately.***
-- Also works for LpGBT, endian of IC is different with GBT.
+- Also works for LpGBT, bit order of IC is different with GBT.
 ```
 
 For reference: https://doi.org/10.1109/TNS.2019.2924795
